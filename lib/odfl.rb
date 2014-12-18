@@ -4,7 +4,7 @@ require 'savon'
 class Odfl
 
   attr_reader :originPostalCode, :originCountry, :destinationPostalCode, :destinationCountry,
-              :totalCubicVolume, :cubicUnits
+              :totalCubicVolume, :cubicUnits, :pickupDateTime, :deliveryDateTime, :codAmount
   attr_accessor :client, :response, :request, :freight, :accessorials, :currencyFormat
 
   # 1 Character Alpha Either O (outbound) or I (inbound). Defaults to "O"
@@ -35,6 +35,32 @@ class Odfl
   # Set the linear feet
   # Required for tariff 698- Security Divider
   attr_accessor :linearFeet
+  # Number of stackable pallets
+  attr_accessor :numberStackablePallets
+  # Shipment Type
+  # Defaults to LTL with optional guaranteed returned
+  #
+  # ==== Acceptable Values
+  # * *LTL* Standard LTL rate only returned
+  # * *GTD* Guaranteed rate only returned
+  # * *GTO* Expedited delivery rate returned (requires pickup and delivery date/time)
+  attr_accessor :shipType
+  # Insurance amount
+  # Required for IND or INH accessorials
+  attr_accessor :insuranceAmount
+  # Number of Loose Pieces
+  attr_accessor :loosePieces
+  # Customer Email Address
+  attr_accessor :email
+  # Send email offers to customer
+  # Defaults to false
+  attr_accessor :sendEmailOffers
+  # Customers first and last name
+  attr_accessor :firstName, :lastName
+  # Customer Phone Number
+  # No dashes or spaces need to be entered
+  # I.E. 5558675309
+  attr_accessor :contactPhoneNumber
 
   def initialize #:notnew: stops RDoc from seeing the initialize method
     @client = Savon.client(wsdl: 'https://www.odfl.com/wsRate_v3/services/Rate/wsdl/Rate.wsdl', ssl_verify_mode: :none,
@@ -45,6 +71,7 @@ class Odfl
     self.currencyFormat = "USD"
     self.requestReferenceNumber = false
     self.weightUnits = "LBS"
+    self.sendEmailOffers = false
   end
 
   # Allows the user to set the origin zip and country of the shipment
@@ -122,7 +149,9 @@ class Odfl
   #   quote = Odfl.new
   #   quote.addAccessorial("HYD")
   def addAccessorial(accessorial)
-    self.accessorials.push(accessorial)
+    if !self.accessorials.include?(accessorial)
+      self.accessorials.push(accessorial)
+    end
   end
 
   # Sets cubic volume for rate request
@@ -142,6 +171,66 @@ class Odfl
   def setCubicVolume(totalCubicVolume, cubicUnits = "CF")
     @totalCubicVolume = totalCubicVolume
     @cubicUnits = cubicUnits
+  end
+
+  # Set the pickup date and time
+  # Required for Expedited GTO rates
+  #
+  # ==== Attributes
+  # * +month+ Pickup Month 1-12
+  # * +day+ Pickup Day 1-31
+  # * +year+ Pickup Year (4 digit year)
+  # * +hour+ Pickup Hour 0-23
+  # * +minute+ Pickup Minute 0-59
+  #
+  # ==== Usage
+  #   quote = Odfl.new
+  #   quote.setPickupDateTime(12,25,2014,12,30)
+  def setPickupDateTime(month, day, year, hour, minute)
+    month = month<10 ? "0#{month}" : "#{month}"
+    day = day<10 ? "0#{day}" : "#{day}"
+    hour = hour<10 ? "0#{hour}" : "#{hour}"
+    minute = minute<10 ? "0#{minute}" : "#{minute}"
+    second = '00'
+
+    @pickupDateTime = "#{year}-#{month}-#{day}T#{hour}:#{minute}:#{second}"
+  end
+
+  # Set the delivery date and time
+  # Required for Expedited GTO rates
+  #
+  # ==== Attributes
+  # * +month+ Delivery Month 1-12
+  # * +day+ Delivery Day 1-31
+  # * +year+ Delivery Year (4 digit year)
+  # * +hour+ Delivery Hour 0-23
+  # * +minute+ Delivery Minute 0-59
+  #
+  # ==== Usage
+  #   quote = Odfl.new
+  #   quote.setDeliveryDateTime(12,25,2014,12,30)
+  def setDeliveryDateTime(month, day, year, hour, minute)
+    month = month<10 ? "0#{month}" : "#{month}"
+    day = day<10 ? "0#{day}" : "#{day}"
+    hour = hour<10 ? "0#{hour}" : "#{hour}"
+    minute = minute<10 ? "0#{minute}" : "#{minute}"
+    second = '00'
+
+    @deliveryDateTime = "#{year}-#{month}-#{day}T#{hour}:#{minute}:#{second}"
+  end
+
+  # Set an amount for COD
+  # This will also automatically add the COD accessorial
+  #
+  # ==== Attributes
+  # * *amount* The COD amount
+  #
+  # ==== Usage
+  #   quote = Odfl.new
+  #   quote.setCODAmount(100.53)
+  def setCODAmount(amount)
+    @codAmount = amount
+    self.addAccessorial('COD')
   end
 
   def get_rates
@@ -167,7 +256,19 @@ class Odfl
                                                                 string: self.accessorials
                                                             },
                                                             totalCubicVolume: @totalCubicVolume,
-                                                            cubicUnits: @cubicUnits
+                                                            cubicUnits: @cubicUnits,
+                                                            numberStackablePallets: self.numberStackablePallets,
+                                                            pickupDateTime: @pickupDateTime,
+                                                            deliveryDateTime: @deliveryDateTime,
+                                                            shipType: self.shipType,
+                                                            codAmount: @codAmount,
+                                                            insuranceAmount: self.insuranceAmount,
+                                                            loosePieces: self.loosePieces,
+                                                            email: self.email,
+                                                            sendEmailOffers: self.sendEmailOffers,
+                                                            firstName: self.firstName,
+                                                            lastName: self.lastName,
+                                                            contactPhoneNumber: self.contactPhoneNumber
                                                })
   end
 end
