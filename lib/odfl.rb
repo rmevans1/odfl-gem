@@ -57,10 +57,6 @@ class Odfl
   attr_accessor :sendEmailOffers
   # Customers first and last name
   attr_accessor :firstName, :lastName
-  # Customer Phone Number
-  # No dashes or spaces need to be entered
-  # I.E. 5558675309
-  attr_accessor :contactPhoneNumber
 
   def initialize #:notnew: stops RDoc from seeing the initialize method
     @client = Savon.client(wsdl: 'https://www.odfl.com/wsRate_v3/services/Rate/wsdl/Rate.wsdl', ssl_verify_mode: :none,
@@ -267,8 +263,7 @@ class Odfl
                                                             email: self.email,
                                                             sendEmailOffers: self.sendEmailOffers,
                                                             firstName: self.firstName,
-                                                            lastName: self.lastName,
-                                                            contactPhoneNumber: self.contactPhoneNumber
+                                                            lastName: self.lastName
                                                })
   end
 end
