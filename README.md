@@ -1,5 +1,12 @@
-[![Gem Version](https://badge.fury.io/rb/odfl.svg)](http://badge.fury.io/rb/odfl)
 # Odfl
+
+Get Old Dominion Freight Line Shipping Quotes
+
+[RDoc](http://rubydoc.info/gems/odfl)
+
+[![Gem Version](https://badge.fury.io/rb/odfl.svg)](http://badge.fury.io/rb/odfl)
+[![Code Climate](https://codeclimate.com/github/rmevans1/odfl-gem/badges/gpa.svg)](https://codeclimate.com/github/rmevans1/odfl-gem)
+[![Test Coverage](https://codeclimate.com/github/rmevans1/odfl-gem/badges/coverage.svg)](https://codeclimate.com/github/rmevans1/odfl-gem)
 
 The gem allows you to retrieve shipping quotes from Old Dominion Freight Line.
 A customer account is required to retrieve customer specific pricing. However,
