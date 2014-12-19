@@ -7,6 +7,7 @@ Get Old Dominion Freight Line Shipping Quotes
 [![Gem Version](https://badge.fury.io/rb/odfl.svg)](http://badge.fury.io/rb/odfl)
 [![Code Climate](https://codeclimate.com/github/rmevans1/odfl-gem/badges/gpa.svg)](https://codeclimate.com/github/rmevans1/odfl-gem)
 [![Test Coverage](https://codeclimate.com/github/rmevans1/odfl-gem/badges/coverage.svg)](https://codeclimate.com/github/rmevans1/odfl-gem)
+[![Build Status](https://travis-ci.org/rmevans1/odfl-gem.svg?branch=master)](https://travis-ci.org/rmevans1/odfl-gem)
 
 The gem allows you to retrieve shipping quotes from Old Dominion Freight Line.
 A customer account is required to retrieve customer specific pricing. However,
