@@ -173,46 +173,27 @@ class Odfl
   # Required for Expedited GTO rates
   #
   # ==== Attributes
-  # * +month+ Pickup Month 1-12
-  # * +day+ Pickup Day 1-31
-  # * +year+ Pickup Year (4 digit year)
-  # * +hour+ Pickup Hour 0-23
-  # * +minute+ Pickup Minute 0-59
+  # * +month+ Pickup/Delivery Month 1-12
+  # * +day+ Pickup/Delivery Day 1-31
+  # * +year+ Pickup/Delivery Year (4 digit year)
+  # * +hour+ Pickup/Delivery Hour 0-23
+  # * +minute+ Pickup/Delivery Minute 0-59
+  # * +type+ The type of time to set either "pickup" or "delivery"
   #
   # ==== Usage
   #   quote = Odfl.new
-  #   quote.setPickupDateTime(12,25,2014,12,30)
-  def setPickupDateTime(month, day, year, hour, minute)
+  #   quote.setPickupDeliveryDateTime(12,25,2014,12,30, "delivery")
+  def setPickupDeliveryDateTime(month, day, year, hour, minute, type)
     month = month<10 ? "0#{month}" : "#{month}"
     day = day<10 ? "0#{day}" : "#{day}"
     hour = hour<10 ? "0#{hour}" : "#{hour}"
     minute = minute<10 ? "0#{minute}" : "#{minute}"
     second = '00'
-
-    @pickupDateTime = "#{year}-#{month}-#{day}T#{hour}:#{minute}:#{second}"
-  end
-
-  # Set the delivery date and time
-  # Required for Expedited GTO rates
-  #
-  # ==== Attributes
-  # * +month+ Delivery Month 1-12
-  # * +day+ Delivery Day 1-31
-  # * +year+ Delivery Year (4 digit year)
-  # * +hour+ Delivery Hour 0-23
-  # * +minute+ Delivery Minute 0-59
-  #
-  # ==== Usage
-  #   quote = Odfl.new
-  #   quote.setDeliveryDateTime(12,25,2014,12,30)
-  def setDeliveryDateTime(month, day, year, hour, minute)
-    month = month<10 ? "0#{month}" : "#{month}"
-    day = day<10 ? "0#{day}" : "#{day}"
-    hour = hour<10 ? "0#{hour}" : "#{hour}"
-    minute = minute<10 ? "0#{minute}" : "#{minute}"
-    second = '00'
-
-    @deliveryDateTime = "#{year}-#{month}-#{day}T#{hour}:#{minute}:#{second}"
+    if type == 'delivery'
+      @deliveryDateTime = "#{year}-#{month}-#{day}T#{hour}:#{minute}:#{second}"
+    else
+      @pickupDateTime = "#{year}-#{month}-#{day}T#{hour}:#{minute}:#{second}"
+    end
   end
 
   # Set an amount for COD

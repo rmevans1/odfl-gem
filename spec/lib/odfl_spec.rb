@@ -23,4 +23,15 @@ describe Odfl do
     expect(quote.movement).to eq('O')
   end
 
+  it 'should set the delivery date and time' do
+    quote.setPickupDeliveryDateTime(12,25,2014,12,30,'delivery')
+    expect(quote).not_to be_nil
+    expect(quote.deliveryDateTime).to eq('2014-12-25T12:30:00')
+  end
+
+  it 'should set the pickup date and time' do
+    quote.setPickupDeliveryDateTime(12,22,2014,12,30,'pickup')
+    expect(quote).not_to be_nil
+    expect(quote.pickupDateTime).to eq('2014-12-22T12:30:00')
+  end
 end
