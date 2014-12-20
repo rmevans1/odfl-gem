@@ -112,11 +112,42 @@ describe Odfl do
 
     result = quote.get_rates
     expect(result).to be_truthy
-    puts quote.resultHash
     rate = quote.get_estimate
-    puts 'Estimate Below: '
-    puts rate
 
-    #expect(rate[:grossFreightCharge]).to be > 0
+    expect(rate).to be_a_kind_of(Hash)
+
+    expect(Float(rate[:gross_freight_charge])).to be > 0
+  end
+
+  it 'should return a valid hash for originating service center' do
+    quote = Odfl.new
+    quote.set_origin(20602)
+    quote.set_destination(90210)
+
+    pallet = OdflFreight.new
+    pallet.ratedClass = 70
+    pallet.weight = 1000
+    quote.addFreight(pallet.to_hash)
+
+    result = quote.get_rates
+    expect(result).to be_truthy
+
+    expect(quote.getOriginatingServiceCenter).to be_a_kind_of(Hash)
+  end
+
+  it 'should return a valid hash for destination service center' do
+    quote = Odfl.new
+    quote.set_origin(20602)
+    quote.set_destination(90210)
+
+    pallet = OdflFreight.new
+    pallet.ratedClass = 70
+    pallet.weight = 1000
+    quote.addFreight(pallet.to_hash)
+
+    result = quote.get_rates
+    expect(result).to be_truthy
+
+    expect(quote.getDestinationServiceCenter).to be_a_kind_of(Hash)
   end
 end

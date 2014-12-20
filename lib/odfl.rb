@@ -259,6 +259,14 @@ class Odfl
     end
   end
 
+  def getOriginatingServiceCenter
+    @resultHash[:originating_service_center]
+  end
+
+  def getDestinationServiceCenter
+    @resultHash[:destination_service_center]
+  end
+
   def get_estimate
     @resultHash[:rate_estimate]
   end
