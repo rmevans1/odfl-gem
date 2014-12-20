@@ -190,10 +190,13 @@ class Odfl
     hour = hour<10 ? "0#{hour}" : "#{hour}"
     minute = minute<10 ? "0#{minute}" : "#{minute}"
     second = '00'
+
+    date = "#{year}-#{month}-#{day}T#{hour}:#{minute}:#{second}"
+
     if type == 'delivery'
-      @deliveryDateTime = "#{year}-#{month}-#{day}T#{hour}:#{minute}:#{second}"
+      @deliveryDateTime = date
     else
-      @pickupDateTime = "#{year}-#{month}-#{day}T#{hour}:#{minute}:#{second}"
+      @pickupDateTime = date
     end
   end
 
@@ -248,7 +251,7 @@ class Odfl
                                                             lastName: self.lastName
                                                })
     processResult(@response)
-    
+
     if @resultHash[:success] == '1'
       true
     else
