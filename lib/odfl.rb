@@ -59,9 +59,9 @@ class Odfl
   # Customers first and last name
   attr_accessor :firstName, :lastName
 
-  def initialize #:notnew: stops RDoc from seeing the initialize method
+  def initialize(log = false, log_level= :debug, pretty_print_xml = false) #:notnew: stops RDoc from seeing the initialize method
     @client = Savon.client(wsdl: 'https://www.odfl.com/wsRate_v3/services/Rate/wsdl/Rate.wsdl', ssl_verify_mode: :none,
-                            log: true, log_level: :debug, pretty_print_xml: true)
+                            log: log, log_level: log_level, pretty_print_xml: pretty_print_xml)
     self.freight = Array.new
     self.accessorials = Array.new
     self.tariff = 559
