@@ -248,7 +248,7 @@ class Odfl
                                                             lastName: self.lastName
                                                })
     processResult(@response)
-    puts @resultHash[:success]
+    
     if @resultHash[:success] == '1'
       true
     else
