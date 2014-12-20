@@ -80,4 +80,35 @@ describe Odfl do
     expect(quote).not_to be_nil
     expect(quote.freight.count).to eq(1)
   end
+
+  it 'should return false for an invalid quote' do
+    quote = Odfl.new
+
+    quote.set_destination(90210)
+    result = quote.get_rates
+
+    expect(quote).not_to be_nil
+    expect(result).to be_falsey
+  end
+
+  it 'should return a valid rate estimate for a valid quote' do
+    quote = Odfl.new
+
+    quote.set_origin(20602)
+    quote.set_destination(90210)
+
+    pallet = OdflFreight.new
+    pallet.ratedClass = 70
+    pallet.weight = 1000
+    quote.addFreight(pallet.to_hash)
+
+    result = quote.get_rates
+    expect(result).to be_truthy
+    puts quote.resultHash
+    rate = quote.get_estimate
+    puts 'Estimate Below: '
+    puts rate
+
+    #expect(rate[:grossFreightCharge]).to be > 0
+  end
 end

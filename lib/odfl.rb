@@ -4,7 +4,8 @@ require 'savon'
 class Odfl
 
   attr_reader :originPostalCode, :originCountry, :destinationPostalCode, :destinationCountry,
-              :totalCubicVolume, :cubicUnits, :pickupDateTime, :deliveryDateTime, :codAmount
+              :totalCubicVolume, :cubicUnits, :pickupDateTime, :deliveryDateTime, :codAmount,
+              :resultHash
   attr_accessor :client, :response, :request, :freight, :accessorials, :currencyFormat
 
   # 1 Character Alpha Either O (outbound) or I (inbound). Defaults to "O"
@@ -246,5 +247,25 @@ class Odfl
                                                             firstName: self.firstName,
                                                             lastName: self.lastName
                                                })
+    processResult(@response)
+    puts @resultHash[:success]
+    if @resultHash[:success] == '1'
+      true
+    else
+      false
+    end
+  end
+
+  def get_estimate
+    @resultHash[:rate_estimate]
+  end
+
+  def get_error
+    @resultHash[:error_messages][:string]
+  end
+
+  private
+  def processResult(result)
+    @resultHash = result.to_hash[:my_rate_response]
   end
 end
