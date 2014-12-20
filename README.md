@@ -48,10 +48,25 @@ quote.movement = "O"
 # Create a basic shipment item
 pallet.ratedClass = 70
 pallet.weight = 1000
+quote.addFreight(pallet.to_hash)
 
 # Get rates
 quote.get_rates
 ```
+
+### Debugging
+
+If you are having trouble getting quotes and need to see the request
+and response it can be enable with the following
+
+Attribute 1 turns logging on
+Attribute 2 sets log level to :debug
+Attribute 3 sets pretty_print_xml to true
+
+``` ruby
+quote = Odfl.new(true, :debug, true)
+```
+
 
 
 ## Contributing
@@ -61,3 +76,9 @@ quote.get_rates
 3. Commit your changes (`git commit -am 'Add some feature'`)
 4. Push to the branch (`git push origin my-new-feature`)
 5. Create a new Pull Request
+
+## Disclaimer
+
+It is your responsibility to make sure that the quotes that are returned are accurate. I have made
+every effort possible to make sure the quotes are accurate. I assume no responsibility for any quotes
+that come back cheaper than they should.
