@@ -91,6 +91,14 @@ describe Odfl do
     expect(result).to be_falsey
   end
 
+  it 'get_error function should return a string for the error message' do
+    quote = Odfl.new
+
+    quote.get_rates
+
+    expect(quote.get_error).to be_a_kind_of(String)
+  end
+
   it 'should return a valid rate estimate for a valid quote' do
     quote = Odfl.new
 
