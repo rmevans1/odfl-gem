@@ -214,6 +214,18 @@ class Odfl
     self.addAccessorial('COD')
   end
 
+  # Runs the rate request
+  #
+  # ==== Usage
+  # quote = Odfl.new
+  # assuming all other data has been correctly input
+  # quote.get_rates
+  #
+  # ==== Return Values
+  # true if quote was successfully generated
+  # call quote.get_estimate for the actual estimate information
+  # false if there was an error
+  # call quote.get_error for the error message
   def get_rates
     @response = @client.call(:get_rate_estimate, message: { originPostalCode: @originPostalCode,
                                                             originCountry: @originCountry,
@@ -259,18 +271,22 @@ class Odfl
     end
   end
 
+  # Return the originating service center information
   def getOriginatingServiceCenter
     @resultHash[:originating_service_center]
   end
 
+  # Return the destination service center information
   def getDestinationServiceCenter
     @resultHash[:destination_service_center]
   end
 
+  # Return the estimate information
   def get_estimate
     @resultHash[:rate_estimate]
   end
 
+  # Return the error message if any messages exist
   def get_error
     @resultHash[:error_messages][:string]
   end

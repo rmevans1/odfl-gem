@@ -53,6 +53,7 @@ quote.addFreight(pallet.to_hash)
 
 # Get rates
 quote.get_rates
+estimate = quote.get_estimate # Gets the actual estimate from ODFL
 ```
 
 ### Debugging
