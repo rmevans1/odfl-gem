@@ -99,6 +99,23 @@ describe Odfl do
     expect(quote.get_error).to be_a_kind_of(String)
   end
 
+  it 'get_error function should return false when no errors exist' do
+    quote = Odfl.new
+
+    quote.set_origin(20602)
+    quote.set_destination(90210)
+
+    pallet = OdflFreight.new
+    pallet.ratedClass = 70
+    pallet.weight = 1000
+    quote.addFreight(pallet.to_hash)
+
+    result = quote.get_rates
+    expect(result).to be_truthy
+
+    expect(quote.get_error).to be_falsey
+  end
+
   it 'should return a valid rate estimate for a valid quote' do
     quote = Odfl.new
 

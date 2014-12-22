@@ -287,8 +287,14 @@ class Odfl
   end
 
   # Return the error message if any messages exist
+  # Returns false if no error exist
   def get_error
-    @resultHash[:error_messages][:string]
+    error = @resultHash[:error_messages]
+    if !error.nil?
+      error[:string]
+    else
+      false
+    end
   end
 
   private
