@@ -172,7 +172,7 @@ describe Odfl do
   end
 
   it 'should return a valid hash for destination service center' do
-    quote = Odfl.new
+    quote = Odfl.new(true, :debug, true)
 
     puts ENV['ODFLUSER']
 
@@ -191,6 +191,7 @@ describe Odfl do
     quote.addFreight(pallet.to_hash)
 
     result = quote.get_rates
+    puts result
     expect(result).to be_truthy
 
     expect(quote.getDestinationServiceCenter).to be_a_kind_of(Hash)
