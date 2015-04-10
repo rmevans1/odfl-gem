@@ -174,6 +174,8 @@ describe Odfl do
   it 'should return a valid hash for destination service center' do
     quote = Odfl.new
 
+    puts ENV['ODFLUSER']
+
     quote.odfl4MeUser = ENV['ODFLUSER']
     quote.odfl4MePassword = ENV['ODFLPASS']
     quote.odflCustomerAccount = ENV['ODFLACCOUNT']
