@@ -102,10 +102,6 @@ describe Odfl do
   it 'get_error function should return false when no errors exist' do
     quote = Odfl.new
 
-    quote.odfl4MeUser = ENV['ODFLUSER']
-    quote.odfl4MePassword = ENV['ODFLPASS']
-    quote.odflCustomerAccount = ENV['ODFLACCOUNT']
-
     quote.movement = 'O'
 
     quote.set_origin(20602)
@@ -117,7 +113,7 @@ describe Odfl do
     quote.addFreight(pallet.to_hash)
 
     result = quote.get_rates
-    expect(result).to be_truthy
+    expect(result).to be true
 
     expect(quote.get_error).to be_falsey
   end
@@ -125,10 +121,6 @@ describe Odfl do
   it 'should return a valid rate estimate for a valid quote' do
     quote = Odfl.new
 
-    quote.odfl4MeUser = ENV['ODFLUSER']
-    quote.odfl4MePassword = ENV['ODFLPASS']
-    quote.odflCustomerAccount = ENV['ODFLACCOUNT']
-
     quote.movement = 'O'
 
     quote.set_origin(20602)
@@ -140,7 +132,7 @@ describe Odfl do
     quote.addFreight(pallet.to_hash)
 
     result = quote.get_rates
-    expect(result).to be_truthy
+    expect(result).to be true
     rate = quote.get_estimate
 
     expect(rate).to be_a_kind_of(Hash)
@@ -151,10 +143,6 @@ describe Odfl do
   it 'should return a valid hash for originating service center' do
     quote = Odfl.new
 
-    quote.odfl4MeUser = ENV['ODFLUSER']
-    quote.odfl4MePassword = ENV['ODFLPASS']
-    quote.odflCustomerAccount = ENV['ODFLACCOUNT']
-
     quote.movement = 'O'
 
     quote.set_origin(20602)
@@ -166,19 +154,13 @@ describe Odfl do
     quote.addFreight(pallet.to_hash)
 
     result = quote.get_rates
-    expect(result).to be_truthy
+    expect(result).to be true
 
     expect(quote.getOriginatingServiceCenter).to be_a_kind_of(Hash)
   end
 
   it 'should return a valid hash for destination service center' do
-    quote = Odfl.new(true, :debug, true)
-
-    puts ENV['ODFLUSER']
-
-    quote.odfl4MeUser = ENV['ODFLUSER']
-    quote.odfl4MePassword = ENV['ODFLPASS']
-    quote.odflCustomerAccount = ENV['ODFLACCOUNT']
+    quote = Odfl.new
 
     quote.movement = 'O'
 
@@ -191,8 +173,7 @@ describe Odfl do
     quote.addFreight(pallet.to_hash)
 
     result = quote.get_rates
-    puts result
-    expect(result).to be_truthy
+    expect(result).to be true
 
     expect(quote.getDestinationServiceCenter).to be_a_kind_of(Hash)
   end

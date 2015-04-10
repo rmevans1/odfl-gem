@@ -264,7 +264,7 @@ class Odfl
                                                })
     processResult(@response)
 
-    if @resultHash[:success] == '1'
+    if @resultHash[:success]
       true
     else
       false
