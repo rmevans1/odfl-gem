@@ -102,6 +102,12 @@ describe Odfl do
   it 'get_error function should return false when no errors exist' do
     quote = Odfl.new
 
+    quote.odfl4MeUser = ENV['ODFLUSER']
+    quote.odfl4MePassword = ENV['ODFLPASS']
+    quote.odflCustomerAccount = ENV['ODFLACCOUNT']
+
+    quote.movement = 'O'
+
     quote.set_origin(20602)
     quote.set_destination(90210)
 
@@ -118,6 +124,12 @@ describe Odfl do
 
   it 'should return a valid rate estimate for a valid quote' do
     quote = Odfl.new
+
+    quote.odfl4MeUser = ENV['ODFLUSER']
+    quote.odfl4MePassword = ENV['ODFLPASS']
+    quote.odflCustomerAccount = ENV['ODFLACCOUNT']
+
+    quote.movement = 'O'
 
     quote.set_origin(20602)
     quote.set_destination(90210)
@@ -138,6 +150,13 @@ describe Odfl do
 
   it 'should return a valid hash for originating service center' do
     quote = Odfl.new
+
+    quote.odfl4MeUser = ENV['ODFLUSER']
+    quote.odfl4MePassword = ENV['ODFLPASS']
+    quote.odflCustomerAccount = ENV['ODFLACCOUNT']
+
+    quote.movement = 'O'
+
     quote.set_origin(20602)
     quote.set_destination(90210)
 
@@ -154,6 +173,13 @@ describe Odfl do
 
   it 'should return a valid hash for destination service center' do
     quote = Odfl.new
+
+    quote.odfl4MeUser = ENV['ODFLUSER']
+    quote.odfl4MePassword = ENV['ODFLPASS']
+    quote.odflCustomerAccount = ENV['ODFLACCOUNT']
+
+    quote.movement = 'O'
+
     quote.set_origin(20602)
     quote.set_destination(90210)
 
