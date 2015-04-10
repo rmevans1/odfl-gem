@@ -60,7 +60,7 @@ class Odfl
   attr_accessor :firstName, :lastName
 
   def initialize(log = false, log_level= :debug, pretty_print_xml = false) #:notnew: stops RDoc from seeing the initialize method
-    @client = Savon.client(wsdl: 'https://www.odfl.com/wsRate_v3/services/Rate/wsdl/Rate.wsdl', ssl_verify_mode: :none,
+    @client = Savon.client(wsdl: 'https://www.odfl.com/wsRate_v3/services/Rate?wsdl', ssl_verify_mode: :none,
                             log: log, log_level: log_level, pretty_print_xml: pretty_print_xml)
     self.freight = Array.new
     self.accessorials = Array.new
@@ -240,7 +240,7 @@ class Odfl
                                                             currencyFormat: self.currencyFormat,
                                                             requestReferenceNumber: self.requestReferenceNumber,
                                                             freightItems: {
-                                                                Freight: self.freight
+                                                                "Freight" => self.freight
                                                             },
                                                             weightUnits: self.weightUnits,
                                                             numberPallets: self.freight.count,
