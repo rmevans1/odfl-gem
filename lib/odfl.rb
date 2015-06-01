@@ -1,7 +1,7 @@
 require "odfl/version"
 require 'savon'
 
-class Odfl
+module Odfl
 
   attr_reader :originPostalCode, :originCountry, :destinationPostalCode, :destinationCountry,
               :totalCubicVolume, :cubicUnits, :pickupDateTime, :deliveryDateTime, :codAmount,
