@@ -1,4 +1,5 @@
 require 'odfl/credentials'
+require 'odfl/request/rate'
 
 module Odfl
   class Shipment
